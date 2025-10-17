@@ -1,0 +1,18 @@
+name: NextHunt
+version: '${version}'
+main: cloud.nextgentech.nexthunt.NextHunt
+api-version: '1.16'
+libraries:
+  - org.telegram:telegrambots:6.9.7.1
+  - com.tchristofferson:ConfigUpdater:2.2
+depend:
+  - ColorAPI
+  - CommandManagerAPI
+commands:
+  hunt:
+    description: Управление игрой охоты на сервере
+    permission-message: У вас недостаточно прав для доступа к этой команде
+    aliases:
+      - nh
+      - nexthunt
+      - dildo
