@@ -12,13 +12,13 @@
 
 telegram:
   # Токен бота от @BotFather
-  token: "8410536115:AAEWz4l9PKCN-_7YyhXhAoZwvqjOXxCxCb8"
+  token: "YOUR_BOT_TOKEN"
 
   # Имя бота (без @)
-  username: "amixolobriganbot"
+  username: "username"
 
   # ID чата для отправки уведомлений
-  chatId: 2113819244
+  chatId: 1234567890
 
 settings:
   world:
