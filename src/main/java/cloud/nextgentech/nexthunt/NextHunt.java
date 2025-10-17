@@ -42,7 +42,6 @@ public final class NextHunt extends JavaPlugin {
             botsApi.registerBot(telegramBot);
 
             getLogger().info("Telegram бот успешно запущен!");
-            telegramBot.sendMessage(Long.parseLong(config.getChatId()), "✅ Сервер запущен!");
         } catch (TelegramApiException e) {
             getLogger().severe("Ошибка запуска Telegram бота: " + e.getMessage());
         }
@@ -59,7 +58,6 @@ public final class NextHunt extends JavaPlugin {
 
         if (telegramBot != null) {
             try {
-                telegramBot.sendMessage(Long.parseLong(config.getChatId()), "🛑 Сервер остановлен!");
                 telegramBot.onClosing();
                 getLogger().info("Telegram бот остановлен корректно.");
             } catch (Exception e) {

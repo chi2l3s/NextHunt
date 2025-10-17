@@ -40,6 +40,7 @@ public class HuntManager implements Listener {
     private BukkitTask countdownTask;
     private BukkitTask huntTask;
     private BukkitTask broadcastTask;
+    private BukkitTask effectTask;
     private BossBar bossBar;
 
     public HuntManager(JavaPlugin plugin, LocationManager locationManager, Config config) {
@@ -157,6 +158,10 @@ public class HuntManager implements Listener {
             }
         }.runTaskTimer(plugin, broadcastPeriod, broadcastPeriod);
 
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.getOnlinePlayers().forEach(player -> SoundUtil.playSound(config.getStartSound(), player));
+        }, 60L);
+
         long coordinatesPeriod = (long) config.getCoordinatedPeriod() * 20;
         this.huntTask = new BukkitRunnable() {
             @Override
@@ -166,13 +171,16 @@ public class HuntManager implements Listener {
                     stop();
                     return;
                 }
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    Bukkit.getOnlinePlayers().forEach(player -> SoundUtil.playSound(config.getStartSound(), player));
-                }, 60L);
                 updateBossBar();
-                target.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 1, 1, true, false, true));
             }
         }.runTaskTimer(plugin, 0L, coordinatesPeriod);
+
+        this.effectTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                target.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 60, 1, true, false, true));
+            }
+        }.runTaskTimer(plugin, 0L, 50L);
     }
 
     public void stop() {
@@ -193,6 +201,10 @@ public class HuntManager implements Listener {
         if (huntTask != null) {
             huntTask.cancel();
             huntTask = null;
+        }
+        if (effectTask != null) {
+            effectTask.cancel();
+            effectTask = null;
         }
 
         for (Player p : Bukkit.getOnlinePlayers()) {
