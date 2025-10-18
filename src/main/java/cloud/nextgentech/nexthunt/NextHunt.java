@@ -4,11 +4,9 @@ import cloud.nextgentech.nexthunt.command.HuntCommand;
 import cloud.nextgentech.nexthunt.manager.HuntManager;
 import cloud.nextgentech.nexthunt.manager.LocationManager;
 import cloud.nextgentech.nexthunt.telegram.Bot;
-import cloud.nextgentech.nexthunt.util.Placeholder;
+import cloud.nextgentech.nexthunt.util.UpdateChecker;
 import me.chi2l3s.colorapi.ColorUtil;
 import me.chi2l3s.colorapi.ColorUtilImpl;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -45,6 +43,8 @@ public final class NextHunt extends JavaPlugin {
         } catch (TelegramApiException e) {
             getLogger().severe("Ошибка запуска Telegram бота: " + e.getMessage());
         }
+
+        new UpdateChecker(this, "chi2l3s/NextHunt").checkForUpdates();
 
         locationManager = new LocationManager();
         huntManager = new HuntManager(this, locationManager, config);
